@@ -1,0 +1,52 @@
+<!-- HTML Example -->
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/starter-sample.css">
+    <script src="https://obniz.com/js/jquery-3.2.1.min.js"></script>
+    <script src="https://unpkg.com/obniz@3.29.0/obniz.js"></script>
+</head>
+
+<body>
+
+    <div id="obniz-debug"></div>
+    <h1>Servo Motor Control</h1>
+    <button id="controlButton">サーボモータを動かす</button>
+
+    <script>
+        var obniz = new Obniz("OBNIZ_ID_HERE");
+        obniz.onconnect = async function () {
+            // Javascript Example
+            var servo = obniz.wired("ServoMotor", { gnd: 0, vcc: 1, signal: 2 });
+
+            servo.angle(0); // initial position
+
+            // サーボモータを制御する関数
+            async function controlServo(count) {
+                for (let i = 0; i < count; i++) {
+                    servo.angle(90);  // 90度に設定
+                    await obniz.wait(500); // 0.5秒待機
+
+                    servo.angle(0);   // 再び0度に設定
+                    await obniz.wait(500); // 0.5秒待機
+                }
+            }
+
+            // ボタンクリックでサーボモータを制御
+            document.getElementById('controlButton').onclick = controlServo(1);
+
+            obniz.onmessage = function (message, from) {
+                count = message;
+                controlServo(count);
+            };
+        }
+
+
+    </script>
+</body>
+
+</html>
