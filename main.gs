@@ -1,3 +1,5 @@
+const oazukeMode = false; // お預けチアちゃんモード時にはtrueに変更
+
 function doPost(e) {
   var sheet = SpreadsheetApp.getActiveSheet();
   var postData = JSON.parse(e.postData.contents);
@@ -44,7 +46,7 @@ function processJsonData(jsonData) {
     sheet.getRange(nextRow, 1).setValue(number); // A列
     sheet.getRange(nextRow, 2).setValue(action); // B列
 
-    if (action == 'closed') {
+    if (action == 'closed' && !oazukeMode) {
       sendMoveCountToObniz(1);
     }
   }
@@ -68,5 +70,5 @@ function sendMoveCountToObniz(count) {
 }
 
 function testSendMoveCountToObniz() {
-  sendMoveCountToObniz(3);
+  sendMoveCountToObniz(2);
 }
