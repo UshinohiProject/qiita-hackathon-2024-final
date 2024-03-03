@@ -1,5 +1,3 @@
-<!-- HTML Example -->
-
 <html>
 
 <head>
@@ -15,7 +13,7 @@
 
     <div id="obniz-debug"></div>
     <h1>Servo Motor Control</h1>
-    <button id="controlButton">サーボモータを動かす</button>
+    <button id="controlButton">サーボモータを動かす(テスト)</button>
 
     <script>
         var obniz = new Obniz("OBNIZ_ID_HERE");
@@ -40,6 +38,7 @@
             document.getElementById('controlButton').onclick = controlServo(1);
 
             obniz.onmessage = function (message, from) {
+                obniz.display.print("Congratulations!");
                 count = message;
                 controlServo(count);
             };
@@ -48,5 +47,4 @@
 
     </script>
 </body>
-
 </html>
